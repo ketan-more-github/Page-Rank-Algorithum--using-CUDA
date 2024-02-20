@@ -68,15 +68,18 @@ void power_method(float **graph, float *r, int n, int max_iter = 1000, float eps
     float* r_last = (float*) malloc(n * sizeof(float));
     
 
-    for(int i = 0; i< n; ++i){
-        r[i] = (1/(float)n);
+    for(int i = 0; i< n; ++i){ // r  is initialized with  1/n
+        
+        r[i] = (1/(float)n); // 
     }
 
-    while(max_iter--){
+    while(max_iter--){     
+
         for(int i = 0; i< n; ++i){
-            r_last[i] = r[i];
+            r_last[i] = r[i];  //copy r int r_last
         }
-        for(int i = 0; i< n; ++i){
+
+        for(int i = 0; i< n; ++i){  //multiply graph * R_last and store result in r
             float sum = 0.0;
 
             for (int j = 0; j< n; ++j){
@@ -87,21 +90,23 @@ void power_method(float **graph, float *r, int n, int max_iter = 1000, float eps
 
         }
 
-        for(int i = 0; i< n; ++i){
+
+        for(int i = 0; i< n; ++i){  // calculate diffrence betw r_last and r and store in r_last
             r_last[i] -= r[i];
         }
 
-        if(norm(r_last, n) < eps){
+        if(norm(r_last, n) < eps){ //call ans should less than eps
             return;
         }
+
 
     }
     return;
 }
 
-void top_nodes(float *r, int n, int count = 10){
+void top_nodes(float *r, int n, int count = 3){
 
-    priority_queue<pair<float, int>> pq;
+    priority_queue<pair<float, int>> pq; 
 
     for(int i = 0; i< n; ++i){
         pq.push(make_pair(r[i], i+ 1));
